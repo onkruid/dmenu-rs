@@ -1,19 +1,32 @@
-mod util;
-mod drw;
-mod globals;
-mod config;
-mod additional_bindings;
-mod item;
-mod fnt;
-mod init;
-mod setup;
-mod run;
-mod clapflags;
-mod plugin_entry;
-mod result;
-mod plugins {
-    include!(concat!(env!("OUT_DIR"), "/proc_mod_plugin.rs"));
-}
+// mod util;
+// mod drw;
+// mod globals;
+// mod config;
+// mod item;
+// mod fnt;
+// mod init;
+// mod setup;
+// mod run;
+// mod clapflags;
+// mod plugin_entry;
+// mod result;
+
+use dmenu_lib::util;
+use dmenu_lib::drw;
+use dmenu_lib::globals;
+use dmenu_lib::config;
+use dmenu_lib::item;
+use dmenu_lib::fnt;
+use dmenu_lib::init;
+use dmenu_lib::setup;
+use dmenu_lib::run;
+use dmenu_lib::clapflags;
+use dmenu_lib::plugin_entry;
+use dmenu_lib::result;
+// TODO: plugins
+// mod plugins {
+//     include!(concat!(env!("OUT_DIR"), "/proc_mod_plugin.rs"));
+// }
 
 use x11::xlib::*;
 use std::ptr;

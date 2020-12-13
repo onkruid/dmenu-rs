@@ -2,6 +2,7 @@
 name = "dmenu_extra_bindings"
 version = "0.1.0"
 authors = ["Shizcow <pohl.devin@gmail.com>"]
+links = "X11"
 edition = "2018"
 
 [build-dependencies]

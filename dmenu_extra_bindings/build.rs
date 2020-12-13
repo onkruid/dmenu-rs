@@ -5,7 +5,7 @@ use std::path::PathBuf;
 // support for that, so here it is
 fn main() {
     let root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
-    let build_path = root.join("src");
+    let build_path = root.join("src/raw");
     // println!("{:?}",target_path);
     // target_path.pop();
     // target_path.pop();

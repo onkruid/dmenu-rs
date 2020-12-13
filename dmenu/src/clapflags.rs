@@ -5,14 +5,23 @@ use regex::RegexBuilder;
 
 use crate::config::{Clrs::*, Schemes::*, Config, DefaultWidth};
 use crate::result::*;
+use super::VERSION;
+use crate::PLUGINS;
 
 lazy_static::lazy_static! {
+    // TODO: move to plugins
     static ref YAML: Yaml = {
-        clap::YamlLoader::load_from_str(include_str!(concat!(env!("BUILD_DIR"), "/cli.yml")))
+        clap::YamlLoader::load_from_str(include_str!("cli_base.yml"))
             .expect("failed to load YAML file") 
             .pop()
             .unwrap()
-        };
+    };
+    // static ref YAML: Yaml = {
+    //     clap::YamlLoader::load_from_str(include_str!(concat!(env!("BUILD_DIR"), "/cli.yml")))
+    //         .expect("failed to load YAML file") 
+    //         .pop()
+    //         .unwrap()
+    //     };
     pub static ref CLAP_FLAGS: ArgMatches<'static> = App::from_yaml(&YAML).get_matches();     
 }
 
@@ -22,15 +31,15 @@ pub fn validate(config: &mut Config) -> CompResult<()> {
 	eprintln!("More than 2 version flags do nothing special");
     }
     if CLAP_FLAGS.occurrences_of("version") == 1 {
-	return Die::stdout(format!("dmenu-rs {}", env!("VERSION")));
+	return Die::stdout(format!("dmenu-rs {}", VERSION));
     }
     if CLAP_FLAGS.occurrences_of("version") >= 2 {
-	let plugins = env!("PLUGINS");
+	let plugins = PLUGINS;
 	if plugins.len() == 0 {
 	    return Die::stdout(format!("dmenu-rs {}\n\
 					Compiled with rustc {}\n\
 					Compiled without plugins",
-				       env!("VERSION"),
+				       VERSION,
 				       rustc_version_runtime::version(),
 	    ));
 	} else {
@@ -38,7 +47,7 @@ pub fn validate(config: &mut Config) -> CompResult<()> {
 					Compiled with rustc {}\n\
 					Compiled with plugins:\n\
 					{}",
-				       env!("VERSION"),
+				       VERSION,
 				       rustc_version_runtime::version(),
 				       plugins.split(" ")
 				       .map(|p| format!("- {}", p))

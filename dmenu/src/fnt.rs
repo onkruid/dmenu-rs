@@ -5,11 +5,12 @@ use fontconfig::fontconfig::{FcPatternDestroy, FcResultMatch, FcPatternGetBool, 
 			     FcFontList, FcObjectSetDestroy, FcFontSetDestroy,
 			     FcChar8, FcObjectSetBuild, FcNameParse,
 			     FcFontSet};
-use crate::additional_bindings::fontconfig::{FC_COLOR, FC_FAMILY};
 use std::ptr;
 use std::ffi::c_void;
 use libc::c_uint;
 use std::mem::MaybeUninit;
+
+use dmenu_extra_bindings::fontconfig::{FC_COLOR, FC_FAMILY};
 
 use crate::drw::Drw;
 use crate::result::*;

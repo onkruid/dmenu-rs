@@ -9,7 +9,7 @@ use std::ptr;
 use std::mem::MaybeUninit;
 use libc::{c_char, c_int, c_uint, c_void};
 
-use crate::additional_bindings::xlib::{XNFocusWindow, XNClientWindow, XNInputStyle};
+use dmenu_extra_bindings::xlib::{XNFocusWindow, XNClientWindow, XNInputStyle};
 use crate::util::grabfocus;
 use crate::config::{Schemes::*, Clrs::*};
 use crate::drw::Drw;

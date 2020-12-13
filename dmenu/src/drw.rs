@@ -14,7 +14,7 @@ use x11::xrender::XGlyphInfo;
 use fontconfig::fontconfig::{FcPatternAddBool, FcPatternDestroy,
 			     FcCharSetCreate, FcCharSetAddChar, FcPatternDuplicate, FcPatternAddCharSet,
 			     FcCharSetDestroy, FcMatchPattern, FcConfigSubstitute};
-use crate::additional_bindings::fontconfig::{FC_SCALABLE, FC_CHARSET, FC_COLOR, FcTrue, FcFalse};
+use dmenu_extra_bindings::fontconfig::{FC_SCALABLE, FC_CHARSET, FC_COLOR, FcTrue, FcFalse};
 use libc::{c_uchar, c_int, c_uint, c_void, free};
 use std::{mem::MaybeUninit, ptr};
 use unicode_segmentation::UnicodeSegmentation;

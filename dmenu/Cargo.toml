@@ -5,19 +5,14 @@ name = "dmenu-rs"
 version = "0.0.0"
 authors = ["Shizcow <pohl.devin@gmail.com>"]
 edition = "2018"
-# links = "X11"
-# build = "build.rs"
 default-run="dmenu"
-
-[[bin]]
-name = "dmenu"
-path = "src/main.rs"
 
 [lib]
 name = "dmenu_lib"
 path = "src/lib.rs"
 
 [dependencies]
+dmenu_extra_bindings = { path = "../dmenu_extra_bindings" }
 clap = { version = "2.33.1", features = ["yaml"]}
 clipboard = "0.5"
 itertools = "0.9"
@@ -30,7 +25,9 @@ rustc_version_runtime = "0.2.0"
 servo-fontconfig = "0.5.0"
 unicode-segmentation = "1.6.0"
 yaml-rust = "^0.3" # clap uses yaml-rust too, so Cargo will figure out the proper version
-x11 = "2.18.2"
+# x11 = "2.18.2"
+# features = ["xlib"] 
+x11 = { version = "2.18.2", features = ["xlib", "xft"] }
 
 [build-dependencies]
 overrider_build = "^0.7.0"
