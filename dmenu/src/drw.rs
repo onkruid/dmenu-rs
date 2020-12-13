@@ -18,6 +18,9 @@ use x11::xlib::{
 };
 use x11::xrender::XGlyphInfo;
 
+#[cfg(feature = "fuzzy")]
+use fuzzy_matcher::{skim::SkimMatcherV2, FuzzyMatcher};
+
 use crate::item::{Item, MatchCode};
 use crate::result::*;
 
@@ -448,6 +451,7 @@ impl Drw {
      *
      * Returns - Vector of items to be drawn
      */
+    #[cfg(not(feature = "fuzzy"))]
     pub fn gen_matches(&mut self) -> CompResult<Vec<Item>> {
         let re = RegexBuilder::new(&regex::escape(&self.input))
             .case_insensitive(!self.config.case_sensitive)
@@ -473,6 +477,33 @@ impl Drw {
             exact.push(item);
         }
         Ok(exact)
+    }
+
+    /// Fuzzy implementation
+    #[cfg(feature = "fuzzy")]
+    pub fn gen_matches(&mut self) -> CompResult<Vec<Item>> {
+        println!("Fuzzy");
+        let searchterm = self.input.clone();
+        let matcher: Box<dyn FuzzyMatcher> = Box::new(SkimMatcherV2::default());
+        let mut items: Vec<(Item, i64)> = self
+            .get_items()
+            .iter()
+            .map(|item| {
+                (
+                    item.clone(),
+                    if let Some(score) = matcher.fuzzy_match(&item.text, &searchterm) {
+                        -score
+                    } else {
+                        1
+                    },
+                )
+            })
+            .collect();
+        items.retain(|(_, score)| *score <= 0);
+        items.sort_by_key(|(item, _)| item.text.len()); // this prioritizes exact matches
+        items.sort_by_key(|(_, score)| *score);
+
+        Ok(items.into_iter().map(|(item, _)| item).collect())
     }
 }
 
