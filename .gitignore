@@ -20,3 +20,8 @@ dmenu-*
 
 # m4 stuff
 src/build/Cargo.toml
+
+
+# Generated stuff
+dmenu/VERSION
+old/

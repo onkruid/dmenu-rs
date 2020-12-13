@@ -2,7 +2,7 @@
 
 [package]
 name = "dmenu-rs"
-version = "0.0.0"
+version = "0.1.0"
 authors = ["Shizcow <pohl.devin@gmail.com>"]
 edition = "2018"
 default-run="dmenu"
@@ -25,8 +25,6 @@ rustc_version_runtime = "0.2.0"
 servo-fontconfig = "0.5.0"
 unicode-segmentation = "1.6.0"
 yaml-rust = "^0.3" # clap uses yaml-rust too, so Cargo will figure out the proper version
-# x11 = "2.18.2"
-# features = ["xlib"] 
 x11 = { version = "2.18.2", features = ["xlib", "xft"] }
 
 [build-dependencies]

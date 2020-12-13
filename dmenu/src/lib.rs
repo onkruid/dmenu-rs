@@ -1,6 +1,7 @@
 
 // TODO: fix
-pub(crate) const VERSION: &'static str = "0.0.0";
+pub(crate) const VERSION: &'static str = include_str!("../VERSION");
+// pub(crate) const VERSION: &'static str = "0.0.0";
 pub(crate) const PLUGINS: &'static str = "";
 
 

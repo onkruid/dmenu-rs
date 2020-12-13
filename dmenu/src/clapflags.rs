@@ -5,7 +5,7 @@ use regex::RegexBuilder;
 
 use crate::config::{Clrs::*, Schemes::*, Config, DefaultWidth};
 use crate::result::*;
-use super::VERSION;
+use crate::VERSION;
 use crate::PLUGINS;
 
 lazy_static::lazy_static! {

@@ -11,17 +11,10 @@
 // mod plugin_entry;
 // mod result;
 
-use dmenu_lib::util;
 use dmenu_lib::drw;
 use dmenu_lib::globals;
 use dmenu_lib::config;
-use dmenu_lib::item;
-use dmenu_lib::fnt;
-use dmenu_lib::init;
-use dmenu_lib::setup;
-use dmenu_lib::run;
 use dmenu_lib::clapflags;
-use dmenu_lib::plugin_entry;
 use dmenu_lib::result;
 // TODO: plugins
 // mod plugins {
