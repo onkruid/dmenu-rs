@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "dmenu_extra_bindings",
+    "dmenu",
+]
