@@ -118,6 +118,7 @@ impl Drw {
             let mut cur_font: Option<usize> = None;
             let mut spool = Spool::new();
 
+            // TODO: this prevents us from using Cow
             text.push_str("."); // this will be removed later; turned into elipses
 
             for cur_char in text.chars() {
@@ -274,7 +275,6 @@ impl Drw {
     }
 
     pub fn draw(&mut self) -> CompResult<()> {
-        // drawmenu
         self.pseudo_globals.promptw = if self.config.prompt.len() != 0 {
             self.textw(Prompt)?
         } else {
@@ -302,6 +302,7 @@ impl Drw {
                 .0;
         }
 
+        // draw menu
         let matches = Items::draw(
             self,
             if self.config.lines > 0 {
@@ -311,7 +312,7 @@ impl Drw {
             },
         )?;
 
-        /* draw input field */
+        // draw input field
         let w =
             if self.config.lines > 0 || self.items.as_mut().unwrap().match_len() == 0 || !matches {
                 self.w - x
@@ -417,6 +418,7 @@ impl Drw {
      * Does it need additional processing?
      */
     pub fn format_input(&mut self) -> CompResult<String> {
+        // TODO: CowString
         Ok(self.input.clone())
     }
 
