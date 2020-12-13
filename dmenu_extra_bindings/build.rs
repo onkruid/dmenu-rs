@@ -6,11 +6,6 @@ use std::path::PathBuf;
 fn main() {
     let root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
     let build_path = root.join("src/raw");
-    // println!("{:?}",target_path);
-    // target_path.pop();
-    // target_path.pop();
-    // target_path = target_path.join("target");
-    // let build_path = target_path.join("build");
     
     // servo-fontconfig does a good job for 99% of fontconfig,
     // but doesn't quite get everything we need.
@@ -35,4 +30,8 @@ fn main() {
         .expect("Unable to generate xlib bindings")
         .write_to_file(build_path.join("xlib.rs"))
         .expect("Couldn't write xlib bindings!");
+
+    // TODO?
+    // println!("cargo:rustc-link-lib=X11");
+    // println!("cargo:rustc-link-lib=Xft");
 }

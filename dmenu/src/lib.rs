@@ -15,6 +15,5 @@ pub mod clapflags;
 pub mod globals;
 pub mod init;
 pub mod item;
-pub mod plugin_entry;
 pub mod run;
 pub mod setup;

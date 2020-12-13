@@ -11,6 +11,12 @@ default-run="dmenu"
 name = "dmenu_lib"
 path = "src/lib.rs"
 
+
+[features]
+default = ["fuzzy"]
+fuzzy = ["fuzzy-matcher"]
+Xinerama = []
+
 [dependencies]
 dmenu_extra_bindings = { path = "../dmenu_extra_bindings" }
 clap = { version = "2.33.1", features = ["yaml"]}
@@ -27,12 +33,11 @@ unicode-segmentation = "1.6.0"
 yaml-rust = "^0.3" # clap uses yaml-rust too, so Cargo will figure out the proper version
 x11 = { version = "2.18.2", features = ["xlib", "xft"] }
 
+# Optional features
+fuzzy-matcher = { version = "0.3.4", optional = true }
+
 [build-dependencies]
 overrider_build = "^0.7.0"
 proc_use = "^0.2.1"
 yaml-rust = "^0.3"
 termcolor = "1.1"
-
-[features]
-Xinerama = []
-default = []
