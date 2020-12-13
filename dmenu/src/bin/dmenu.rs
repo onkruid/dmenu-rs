@@ -38,7 +38,6 @@ fn main() {
 }
 
 fn try_main() -> CompResult<()> {
-    // let mut config = Config::default();
     let pseudo_globals = PseudoGlobals::default();
 
     let app = create_app();
@@ -66,30 +65,38 @@ fn try_main() -> CompResult<()> {
 
     let config = Config::from_args(args)?;
 
+    // SAFETY: FFI call
     unsafe {
         if setlocale(LC_CTYPE, ptr::null()) == ptr::null_mut() || XSupportsLocale() == 0 {
             return Die::stderr("warning: no locale support".to_owned());
         }
-        let dpy = XOpenDisplay(ptr::null_mut());
-        if dpy == ptr::null_mut() {
-            return Die::stderr("cannot open display".to_owned());
-        }
-        let screen = XDefaultScreen(dpy);
-        let root = XRootWindow(dpy, screen);
-        let parentwin = root.max(config.embed);
-        // TODO: this is unsafe?
-        let mut wa: XWindowAttributes = MaybeUninit::uninit().assume_init();
-        XGetWindowAttributes(dpy, parentwin, &mut wa);
-
-        let mut drw = Drw::new(dpy, screen, root, wa, pseudo_globals, config)?;
-        if cfg!(target_os = "openbsd") {
-            pledge::pledge("stdio rpath", None)
-                .map_err(|_| Die::Stderr("Could not pledge".to_owned()))?;
-        }
-
-        drw.setup(parentwin, root)?;
-        drw.run()
     }
+    // SAFETY: FFI call
+    let dpy = unsafe { XOpenDisplay(ptr::null_mut()) };
+    if dpy == ptr::null_mut() {
+        return Die::stderr("cannot open display".to_owned());
+    }
+    // SAFETY: FFI call
+    let screen = unsafe { XDefaultScreen(dpy) };
+    // SAFETY: FFI call
+    let root = unsafe { XRootWindow(dpy, screen) };
+    let parentwin = root.max(config.embed);
+
+    // SAFETY: `XGetWindowAttributes` should initialize everything
+    let wa = unsafe {
+        let mut wa = MaybeUninit::uninit();
+        XGetWindowAttributes(dpy, parentwin, wa.as_mut_ptr());
+        wa.assume_init()
+    };
+
+    let mut drw = Drw::new(dpy, screen, root, wa, pseudo_globals, config)?;
+    if cfg!(target_os = "openbsd") {
+        pledge::pledge("stdio rpath", None)
+            .map_err(|_| Die::Stderr("Could not pledge".to_owned()))?;
+    }
+
+    drw.setup(parentwin, root)?;
+    drw.run()
 }
 
 fn create_app() -> App<'static, 'static> {
