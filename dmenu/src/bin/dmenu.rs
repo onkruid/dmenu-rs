@@ -18,6 +18,11 @@ use result::*;
 
 use clap::{App, Arg};
 
+
+// Big TODO:
+//  - error handling
+//  - Some allocations
+
 fn main() {
     // just a wrapper to ensure a clean death in the event of error
     std::process::exit(match try_main() {
