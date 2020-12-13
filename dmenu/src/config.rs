@@ -1,5 +1,4 @@
 use libc::{c_int, c_uint};
-use std::mem::MaybeUninit;
 use x11::xlib::Window;
 
 pub enum Schemes {
@@ -45,10 +44,6 @@ pub struct Config {
 
 impl Default for Config {
     fn default() -> Self {
-        // TODO: remove unsafe? (this is not safe)
-        // TODO: does is have to be this weird value?
-        let promptw = unsafe { MaybeUninit::uninit().assume_init() };
-
         // [fg, bg]
         let mut colors = [[[0; 8]; 2]; SchemeLast as usize];
         colors[SchemeNorm as usize] = [*b"#bbbbbb\0", *b"#222222\0"];
@@ -59,7 +54,7 @@ impl Default for Config {
             lines: 0,
             topbar: true,
             prompt: Default::default(),
-            promptw,
+            promptw: 0,
             fontstrings: vec!["mono:size=10".to_owned()],
             fast: false,
             embed: 0,
