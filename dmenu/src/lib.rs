@@ -1,7 +1,5 @@
-
-// TODO: fix
-pub(crate) const VERSION: &'static str = include_str!("../VERSION");
-// pub(crate) const VERSION: &'static str = "0.0.0";
+pub const VERSION: &'static str = include_str!("../VERSION");
+#[allow(unused)] // TODO: remove
 pub(crate) const PLUGINS: &'static str = "";
 
 
@@ -10,8 +8,6 @@ pub mod drw;
 pub mod util;
 pub mod fnt;
 pub mod config;
-pub mod clapflags;
-// pub mod additional_bindings;
 pub mod globals;
 pub mod init;
 pub mod item;
